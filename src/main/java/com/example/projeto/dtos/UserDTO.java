@@ -23,6 +23,7 @@ public class UserDTO implements Serializable{
 
     @NotEmpty(message = "Nome não pode ser em branco")
     @NotBlank(message = "Nome não pode ser em branco")
+    @Length(min = 4, max = 10, message = "Senha deve ter entre ....")
     private String senha;
 
     public UserDTO(){}

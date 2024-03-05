@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -74,14 +75,13 @@ public class UserController {
 	 * }
 	 */
 
+	 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<UserDTOResposta> salvar(@Valid @RequestBody UserDTO dto) {
 		UserModel model = service.insert(dto.transformaParaObjeto());
-		// return new ResponseEntity<>(UserDTOResposta.transformaEmDTO(model),
-		// HttpStatus.CREATED);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(model.getId()).toUri();
-		return ResponseEntity.created(uri).build();
+		return new ResponseEntity<>(UserDTOResposta.transformaEmDTO(model), HttpStatus.CREATED);
 	}
+
 
 	/*
 	 * @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
