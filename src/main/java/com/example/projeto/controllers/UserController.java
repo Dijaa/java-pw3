@@ -5,18 +5,23 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.projeto.dtos.UserDTO;
 import com.example.projeto.dtos.UserDTOResposta;
 import com.example.projeto.models.UserModel;
 import com.example.projeto.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -26,7 +31,8 @@ public class UserController {
 	private UserService service;
 
 	/*
-	 Método sem DTO
+	 * Método sem DTO
+	 * 
 	 * @RequestMapping(method = RequestMethod.GET)
 	 * public ResponseEntity<List<UserModel>> getAllUsers() {
 	 * List<UserModel> list = service.getAll();
@@ -69,17 +75,23 @@ public class UserController {
 	 */
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<UserDTOResposta> salvar(@RequestBody UserDTO dto) {
+	public ResponseEntity<UserDTOResposta> salvar(@Valid @RequestBody UserDTO dto) {
 		UserModel model = service.insert(dto.transformaParaObjeto());
-		return new ResponseEntity<>(UserDTOResposta.transformaEmDTO(model), HttpStatus.CREATED);
+		// return new ResponseEntity<>(UserDTOResposta.transformaEmDTO(model),
+		// HttpStatus.CREATED);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(model.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 
-	/*@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody UserModel model, @PathVariable Integer id) {
-		model.setId(id);
-		model = service.update(model);
-		return ResponseEntity.noContent().build();
-	}*/
+	/*
+	 * @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	 * public ResponseEntity<Void> update(@RequestBody UserModel
+	 * model, @PathVariable Integer id) {
+	 * model.setId(id);
+	 * model = service.update(model);
+	 * return ResponseEntity.noContent().build();
+	 * }
+	 */
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody UserDTO dto, @PathVariable Integer id) {
@@ -89,11 +101,24 @@ public class UserController {
 		return ResponseEntity.noContent().build();
 	}
 
-
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	// método para fazer a requisição por paginação
+	@RequestMapping(value = "page", method = RequestMethod.GET)
+	public ResponseEntity<Page<UserDTOResposta>> getAllUsersByPage(
+			@RequestParam(value = "page", defaultValue = "0") Integer pagina,
+			@RequestParam(value = "lines", defaultValue = "10") Integer linhas,
+			@RequestParam(value = "orderBy", defaultValue = "nome") String ordem,
+			@RequestParam(value = "direction", defaultValue = "ASC") String direcao) {
+		Page<UserModel> listaNormal = service.findPage(pagina, linhas, ordem, direcao);
+
+		Page<UserDTOResposta> listaDtos = listaNormal.map(usuario -> new UserDTOResposta(usuario));
+
+		return ResponseEntity.status(HttpStatus.OK).body(listaDtos);
 	}
 
 }
