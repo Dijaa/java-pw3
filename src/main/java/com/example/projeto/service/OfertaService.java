@@ -9,37 +9,38 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import com.example.projeto.models.UserModel;
-import com.example.projeto.repository.UserRepository;
+
+import com.example.projeto.models.OfertaModel;
+import com.example.projeto.repository.OfertaRepository;
 
 
 @Service
-public class UserService {
+public class OfertaService {
 
     @Autowired
-    private UserRepository repository;
+    private OfertaRepository repository;
 
-    public List<UserModel> getAll() {
-        List<UserModel> list = repository.findAll();
+    public List<OfertaModel> getAll() {
+        List<OfertaModel> list = repository.findAll();
         return list;
     }
 
-    public UserModel find(Integer id) {
-        Optional<UserModel> model = repository.findById(id);
+    public OfertaModel find(Integer id) {
+        Optional<OfertaModel> model = repository.findById(id);
         return model.orElse(null);
     }
 
-    public UserModel insert(UserModel model) {
+    public OfertaModel insert(OfertaModel model) {
         return repository.save(model);
     }
 
-    public UserModel update(UserModel model) {
+    public OfertaModel update(OfertaModel model) {
         find(model.getId());
         return repository.save(model);
     }
 
     public void delete(Integer id){
-       UserModel model = find(id);
+       OfertaModel model = find(id);
        try{
             repository.deleteById(id);
        }
@@ -48,7 +49,7 @@ public class UserService {
        }
     }
 
-    public Page<UserModel>  findPage(Integer pagina, Integer linhas, String ordem, String direcao){
+    public Page<OfertaModel>  findPage(Integer pagina, Integer linhas, String ordem, String direcao){
         PageRequest request = PageRequest.of(pagina, linhas, Direction.valueOf(direcao), ordem);
         return repository.findAll(request);
     }
