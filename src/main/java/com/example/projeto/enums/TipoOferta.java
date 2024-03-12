@@ -19,7 +19,7 @@ public enum TipoOferta {
     public static TipoOferta toEnum(Integer codigo){
         if(codigo == null){
             return null;
-        }
+         }
 
         for (TipoOferta x: TipoOferta.values()){
             if(codigo.equals(x.getCodigo())){

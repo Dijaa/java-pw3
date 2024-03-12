@@ -43,7 +43,6 @@ public class ImovelDTOResposta implements Serializable{
       this.usuario_id = model.getUserModel().getId();
       this.ofertas = model.getOfertas();
     }
-    
 
     public ImovelDTOResposta(Integer id, String descricao, Integer quartos, Integer vagas, UserModel model) {
       this.id = id;

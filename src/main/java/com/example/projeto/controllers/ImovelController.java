@@ -37,6 +37,7 @@ public class ImovelController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<ImovelDTOResposta>> getAll() {
 		List<ImovelModel> list = service.getAll();
+		
 		List<ImovelDTOResposta> listaDtos = list.stream().map(imovel -> new ImovelDTOResposta(imovel))
 				.collect(Collectors.toList());
 
