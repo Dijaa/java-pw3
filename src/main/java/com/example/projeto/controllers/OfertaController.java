@@ -9,10 +9,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.projeto.dtos.UserDTOResposta;
+import com.example.projeto.models.ImovelModel;
 import com.example.projeto.models.OfertaModel;
+import com.example.projeto.service.ImovelService;
 import com.example.projeto.service.OfertaService;
 
 @CrossOrigin(origins = "*")
@@ -22,6 +24,9 @@ public class OfertaController {
 
 	@Autowired
 	private OfertaService ofertaService;
+
+	@Autowired
+	private ImovelService imovelService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<OfertaModel>> getAll() {
@@ -37,11 +42,13 @@ public class OfertaController {
 	// }
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<OfertaModel> insert(@RequestBody OfertaModel model) {
+	public ResponseEntity<OfertaModel> insert(@RequestBody OfertaModel model, @RequestParam Integer imovelId) {
+		
+		ImovelModel imovel = imovelService.find(imovelId);
+
+		model.setImovelModel(imovel);
 		ofertaService.insert(model);
 		return new ResponseEntity(model, HttpStatus.CREATED);
 	}
-
-	
 
 }

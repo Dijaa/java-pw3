@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.projeto.dtos.ImovelDTO;
 import com.example.projeto.dtos.ImovelDTOResposta;
-import com.example.projeto.dtos.UserDTOResposta;
 import com.example.projeto.models.ImovelModel;
 import com.example.projeto.service.ImovelService;
 

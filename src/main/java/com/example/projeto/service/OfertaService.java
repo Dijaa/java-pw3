@@ -21,8 +21,14 @@ public class OfertaService {
     private OfertaRepository repository;
 
     public List<OfertaModel> getAll() {
+        try{
         List<OfertaModel> list = repository.findAll();
         return list;
+    }
+    catch(Exception e){
+        System.out.println(e.toString());
+        return null;
+    }
     }
 
     public OfertaModel find(Integer id) {

@@ -69,7 +69,7 @@ public class ImovelService {
 
     public ImovelModel transformaParaObjeto(ImovelDTO imovelDTO) {
         UserModel userModel = userRepository.findById(imovelDTO.getUsuario_id()).orElseThrow();
-
+        
         return new ImovelModel(
                 imovelDTO.getId(),
                 imovelDTO.getDescricao(),

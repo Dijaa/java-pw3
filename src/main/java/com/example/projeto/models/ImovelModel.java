@@ -1,6 +1,9 @@
 package com.example.projeto.models;
 
 import java.io.Serializable;
+import java.util.List;
+
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,12 +43,31 @@ public class ImovelModel implements Serializable{
     @JoinColumn(name = "usuario_id")
     private UserModel userModel;
 
+    @OneToMany(mappedBy="imovelModel")
+    private List<OfertaModel> ofertas;
+
 
     public ImovelModel(String descricao, Integer quartos, Integer vagas, UserModel userModel){
         super();
         this.descricao = descricao;
         this.quartos = quartos;
         this.userModel = userModel;
-    }
+    }   
+
+    public ImovelModel(Integer id, String descricao, Integer quartos, Integer vagas, UserModel userModel){
+        super();
+        this.id = id;
+        this.descricao = descricao;
+        this.quartos = quartos;
+        this.userModel = userModel;
+    }   
+    
+    
+    public ImovelModel(String descricao, Integer quartos, Integer vagas, UserModel userModel, List<OfertaModel> ofertas){
+        super();
+        this.descricao = descricao;
+        this.quartos = quartos;
+        this.userModel = userModel;
+    }   
 
 }
