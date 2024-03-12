@@ -2,8 +2,6 @@ package com.example.projeto.models;
 
 import java.io.Serializable;
 
-import org.hibernate.annotations.ManyToAny;
-
 import com.example.projeto.enums.TipoOferta;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -32,7 +30,7 @@ public class OfertaModel implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private TipoOferta tipoOferta;
+    private Integer tipoOferta;
 
     private double valor;
 
@@ -41,6 +39,14 @@ public class OfertaModel implements Serializable{
     @JsonIgnore
     private ImovelModel imovelModel;
 
+
+    public TipoOferta getTipoOferta() {
+        return TipoOferta.toEnum(tipoOferta);
+    }
+
+    public void setTipoUsuario(TipoOferta tipoOferta) {
+        this.tipoOferta = tipoOferta.getCodigo();
+    }
 
        
     

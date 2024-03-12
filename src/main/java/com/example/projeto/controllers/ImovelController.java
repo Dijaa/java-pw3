@@ -55,6 +55,7 @@ public class ImovelController {
 	public ResponseEntity<ImovelDTOResposta> insert(@RequestBody ImovelDTO dto) {
 		ImovelModel imovel = service.transformaParaObjeto(dto);
 		service.insert(imovel);
+		
 		return new ResponseEntity(ImovelDTOResposta.transformaEmDTO(imovel), HttpStatus.CREATED);
 	}
 

@@ -47,7 +47,9 @@ public class OfertaController {
 		ImovelModel imovel = imovelService.find(imovelId);
 
 		model.setImovelModel(imovel);
+
 		ofertaService.insert(model);
+		
 		return new ResponseEntity(model, HttpStatus.CREATED);
 	}
 
