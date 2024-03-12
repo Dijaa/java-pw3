@@ -1,6 +1,7 @@
 package com.example.projeto.controllers;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.projeto.dtos.ImovelDTO;
 import com.example.projeto.dtos.ImovelDTOResposta;
+import com.example.projeto.dtos.UserDTOResposta;
 import com.example.projeto.models.ImovelModel;
+import com.example.projeto.models.UserModel;
 import com.example.projeto.service.ImovelService;
 
 @CrossOrigin(origins = "*")
@@ -24,10 +27,21 @@ public class ImovelController {
 	@Autowired
 	private ImovelService service;
 
+	// @RequestMapping(method = RequestMethod.GET)
+	// public ResponseEntity<List<ImovelModel>> getAll() {
+	// 	List<ImovelModel> list = service.getAll();
+	// 	return ResponseEntity.status(HttpStatus.OK).body(list);
+	// }
+
+
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<ImovelModel>> getAll() {
+	public ResponseEntity<List<ImovelDTOResposta>> getAll() {
 		List<ImovelModel> list = service.getAll();
-		return ResponseEntity.status(HttpStatus.OK).body(list);
+		List<ImovelDTOResposta> listaDtos = list.stream().map(imovel -> new ImovelDTOResposta(imovel))
+				.collect(Collectors.toList());
+
+		return ResponseEntity.status(HttpStatus.OK).body(listaDtos);
+
 	}
 
 	// @RequestMapping(method = RequestMethod.POST)
