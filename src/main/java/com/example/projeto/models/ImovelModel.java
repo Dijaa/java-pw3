@@ -36,6 +36,8 @@ public class ImovelModel implements Serializable{
 
     private Integer vagas;
 
+    private String imagem; 
+
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private UserModel userModel;
@@ -56,6 +58,17 @@ public class ImovelModel implements Serializable{
         this.id = id;
         this.descricao = descricao;
         this.quartos = quartos;
+        this.vagas = vagas;
+        this.userModel = userModel;
+    }   
+
+    public ImovelModel(Integer id, String descricao, Integer quartos, Integer vagas, String imagem, UserModel userModel){
+        super();
+        this.id = id;
+        this.descricao = descricao;
+        this.quartos = quartos;
+        this.vagas = vagas;
+        this.imagem = imagem;
         this.userModel = userModel;
     }   
     

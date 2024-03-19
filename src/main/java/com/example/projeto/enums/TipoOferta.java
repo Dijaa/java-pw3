@@ -10,6 +10,7 @@ public enum TipoOferta {
     private int codigo;
     private String descricao;
 
+    
     private TipoOferta(int codigo, String descricao){
         this.codigo = codigo;
         this.descricao = descricao;
