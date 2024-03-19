@@ -39,7 +39,6 @@ public class UserService {
     }
 
     public void delete(Integer id){
-       UserModel model = find(id);
        try{
             repository.deleteById(id);
        }

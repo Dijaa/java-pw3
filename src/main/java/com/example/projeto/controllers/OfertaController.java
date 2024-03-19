@@ -41,6 +41,7 @@ public class OfertaController {
 	// 	return new ResponseEntity(Oferta, HttpStatus.CREATED);
 	// }
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<OfertaModel> insert(@RequestBody OfertaModel model, @RequestParam Integer imovelId) {
 		

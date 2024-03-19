@@ -46,7 +46,6 @@ public class OfertaService {
     }
 
     public void delete(Integer id){
-       OfertaModel model = find(id);
        try{
             repository.deleteById(id);
        }
