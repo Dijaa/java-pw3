@@ -13,7 +13,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "users")
 public class UserModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +32,12 @@ public class UserModel implements Serializable {
 
     @OneToMany(mappedBy = "userModel")
     private List<ImovelModel> imoveis;
+
+    @OneToMany(mappedBy = "userModel")
+    private List<OfertaModel> ofertas;
+
+    @OneToMany(mappedBy = "userModel")
+    private List<ImagemModel> imagens;
 
 
     public UserModel() {

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.example.projeto.dtos.ImovelDTO;
 import com.example.projeto.dtos.ImovelDTOResposta;
@@ -46,20 +45,22 @@ public class ImovelController {
 
 	// @RequestMapping(method = RequestMethod.POST)
 	// public ResponseEntity<Void> insert(@RequestBody ImovelDTO dto) {
-	// ImovelModel imovel = service.transformaParaObjeto(dto);
-	// service.insert(imovel);
-	// return new ResponseEntity(imovel, HttpStatus.CREATED);
+	// 	ImovelModel imovel = service.transformaParaObjeto(dto);
+	// 	service.insert(imovel);
+	// 	return new ResponseEntity(imovel, HttpStatus.CREATED);
 	// }
 
-	// DIA 12/03
 	// @RequestMapping(method = RequestMethod.POST)
 	// public ResponseEntity<ImovelDTOResposta> insert(@RequestBody ImovelDTO dto) {
-	// ImovelModel imovel = service.transformaParaObjeto(dto);
-	// service.insert(imovel);
+	// 	ImovelModel imovel = service.transformaParaObjeto(dto);
+	// 	service.insert(imovel);
 
-	// return new ResponseEntity(ImovelDTOResposta.transformaEmDTO(imovel),
-	// HttpStatus.CREATED);
+	// 	return new ResponseEntity(ImovelDTOResposta.transformaEmDTO(imovel),
+	// 			HttpStatus.CREATED);
 	// }
+
+
+
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(method = RequestMethod.POST)
@@ -78,16 +79,15 @@ public class ImovelController {
 
 		ImovelModel imovel = service.transformaParaObjeto(imovelDTO);
 
-		if (!imovel.getUserModel().isAdmin()) {
-			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Você precisa ser um administrador para realizar esta ação");
-		}
+		// if (!imovel.getUserModel().isAdmin()) {
+		// 	throw new ResponseStatusException(HttpStatus.FORBIDDEN,
+		// 			"Você precisa ser um administrador para realizar esta ação");
+		// }
+		String urlImagem = service.uploadImagem(imagem);
 
+		imovel.setImagem(urlImagem);
 
-		//String urlImagem = service.uploadImagem(imagem);
-
-		//imovel.setImagem(urlImagem);
-
-		//service.insert(imovel);
+		service.insert(imovel);
 
 		return new ResponseEntity(ImovelDTOResposta.transformaEmDTO(imovel), HttpStatus.CREATED);
 	}

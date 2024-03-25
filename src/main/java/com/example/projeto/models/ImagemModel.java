@@ -1,8 +1,5 @@
 package com.example.projeto.models;
 
-import java.io.Serializable;
-
-import com.example.projeto.enums.TipoOferta;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -22,18 +19,16 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ofertas")
-public class OfertaModel implements Serializable {
-    private static final long serialVersionUID = 1L;
+@Table(name = "imagem")
+public class ImagemModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer tipoOferta;
+    private String url;
 
-    private double valor;
-
+    
     @ManyToOne
     @JoinColumn(name = "imovel_id")
     @JsonIgnore
@@ -43,19 +38,4 @@ public class OfertaModel implements Serializable {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserModel userModel;
-
-    public TipoOferta getTipoOferta() {
-        return TipoOferta.toEnum(tipoOferta);
-    }
-
-    public void setTipoUsuario(TipoOferta tipoOferta) {
-        this.tipoOferta = tipoOferta.getCodigo();
-    }
-
-    @Override
-    public String toString() {
-        return "OfertaModel [id=" + id + ", imovelModel=" + imovelModel + ", tipoOferta=" + tipoOferta + ", userModel="
-                + userModel + ", valor=" + valor + "]";
-    }
-
 }

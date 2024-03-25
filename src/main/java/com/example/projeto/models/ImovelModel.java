@@ -45,6 +45,8 @@ public class ImovelModel implements Serializable{
     @OneToMany(mappedBy="imovelModel")
     private List<OfertaModel> ofertas;
 
+    @OneToMany(mappedBy="imovelModel")
+    private List<ImagemModel> imagens;
 
     public ImovelModel(String descricao, Integer quartos, Integer vagas, UserModel userModel){
         super();
